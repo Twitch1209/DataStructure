@@ -74,7 +74,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -115,10 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Problem1.cpp" />
+    <ClCompile Include="..\..\Problem2\Problem2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Problem1.h" />
+    <ClInclude Include="..\..\Problem2\LinkNode&amp;&amp;List.h" />
+    <ClInclude Include="..\..\Problem2\Problem2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
