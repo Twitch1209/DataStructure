@@ -192,7 +192,7 @@ void List<T>::output()
 	if (current == NULL) { cout << "NULL"; }
 	while(current!=NULL)
 	{
-		cout<<current->data<<endl;
+		cout<<current->data<<" ";
 		current=current->link;
 	}
 }

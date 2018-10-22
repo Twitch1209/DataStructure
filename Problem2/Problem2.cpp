@@ -8,9 +8,13 @@ bool createNew(List<int>& s1,List<int>& s2,List<int> &s3)
 	//assert(s3.getHead() != NULL);
 	LinkNode<int>* p = s1.getHead()->link;
 	LinkNode<int>* q = s2.getHead()->link;
-	//int x = -1;
 	int count = 0;
-	int x = -1;
+	const int x = -1;
+	if (p->data == x || q->data == x)
+	{
+		return 0;
+	}
+	//no.5
 	while (p->link->data != x || q->link->data != x)
 	{
 		if (p->data == q->data)
@@ -49,6 +53,11 @@ bool createNew(List<int>& s1,List<int>& s2,List<int> &s3)
 			}
 		}
 	}
+	if (p->data == q->data)
+	{
+		count++;
+		s3.Insert(count, p->data);
+	}
 	return true;
 }
 
@@ -75,7 +84,7 @@ int main()
 		count++;
 		flag1=s2.Insert(count, InputNum);
 	}
-	s1.Insert(count, InputNum);
+	s2.Insert(count, InputNum);
 
 	bool flag = createNew(s1, s2, s3);
 	s3.output();
