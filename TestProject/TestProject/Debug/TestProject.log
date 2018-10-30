@@ -1,2 +1,2 @@
-﻿  SeekPath.cpp
-e:\aaaaaaaaaaaaaaaa\transmission\problem3\seekpath.cpp(45): warning C4930: “SeqStack<int> st(void)”: 未调用原型函数(是否是有意用变量定义的?)
+﻿  Problem5.cpp
+  TestProject.vcxproj -> E:\aaaaaaaaaaaaaaaa\Transmission\TestProject\Debug\TestProject.exe
