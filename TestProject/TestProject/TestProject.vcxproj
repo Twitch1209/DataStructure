@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Problem5\LinkNode.h" />
-    <ClInclude Include="..\..\Problem5\MyQueue.h" />
+    <ClInclude Include="..\..\Problem3\MyStack.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Problem5\Problem5.cpp" />
+    <ClCompile Include="..\..\Problem3\NewSeekPath.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
