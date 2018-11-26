@@ -25,28 +25,26 @@ struct LinkNode{
 
 class List{
 public:
-	List(){first=new LinkNode;length=0;}
+	List(){first=new LinkNode;length=0;}									//List的构造函数，在堆内存开辟一个附加头结点并使first指向附加头结点，长度length=0
 	List(const string& nNumber,const string& nName,const string &nSexing,
 	    const int& nAge,const string& nTestType)
-	    {first=new LinkNode(nNumber,nName,nSexing,nAge,nTestType);length=0;}
+	    {first=new LinkNode(nNumber,nName,nSexing,nAge,nTestType);length=0;}//对头结点进行初始化的构造函数 
 	//List(List& L);
-	~List(){makeEmpty();}
+	~List(){makeEmpty();}													//List的析构函数，通过调用MakeEmpty()实现对内存的回收
 	void makeEmpty();
-	int getLength()const{return length;}
-	void setLength(int n){length=n;}
 	bool Insert(int i,string& nNumber,string& nName,string &nSexing,
-    	int& nAge,string& nTestType);
-    bool Remove(string& nNumber);
-    bool Find(string& nNumber);
+    	int& nAge,string& nTestType);										//在链表中插入一个结点
+    bool Remove(string& nNumber);											//在链表中删除一个结点（编号为nNumber的成员）
+    bool Find(string& nNumber);												//在链表中查找一个结点（编号为nNumber的成员）
     bool Change(string& nNumber,string& nName,string &nSexing,
-    	int& nAge,string& nTestType);
+    	int& nAge,string& nTestType);										//在链表中修改一个结点
 	bool isEmpty() const{return first->link==NULL?true:false;}
-	void Display(int pos);
-	void showTitle();
-	void help();
+	void Display(int pos);													//输出位置为pos的信息 
+	void showTitle();														//显示标题考号等信息
+	void help();															//显示提示
 private:
-	LinkNode* first;
-	int length;
+	LinkNode* first;														//链表的头指针
+	int length;																//链表的长度
 };
 
 //make the list an empty list
@@ -65,9 +63,10 @@ void List::makeEmpty()
 //Find
 bool List::Find(string& nNumber)
 {
-	LinkNode* current=first->link;
+	LinkNode* current=first->link;//当前寻找的节点
 	while(current!=NULL)
 	{
+		//找到并且输出该条信息
 		if(current->number==nNumber)
 		{
 			this->showTitle();
@@ -84,23 +83,25 @@ bool List::Find(string& nNumber)
 	return false;
 }
 
-//写到了这里 
 bool List::Insert(int i,string& nNumber,string& nName,string &nSexing,
     	int& nAge,string& nTestType)
 {
-	if(i>1000000 || i<-1)
+	//如果输入的位置大于1000（规定总人数）或者小于0会报错：这个位置不合法，请重新输入！
+	if(i>1000 || i<0)
 	{
-		cout<<"This postion is not allowed!"<<endl;
+		cout<<"这个位置不合法，请重新输入！"<<endl;
 		return false;
 	}
+	//初始化
 	else if (length==0)
 	{
-		LinkNode* q;
-		q = new LinkNode(nNumber, nName, nSexing, nAge, nTestType);
+		LinkNode* q=new LinkNode(nNumber, nName, nSexing, nAge, nTestType);
+		//q = new LinkNode(nNumber, nName, nSexing, nAge, nTestType);
 		first->link = q;
 		length++;
 		return true;
 	}
+	//进行插入
    	int nowpos=0;
 	length++;
    	LinkNode* p=first->link;
@@ -109,14 +110,8 @@ bool List::Insert(int i,string& nNumber,string& nName,string &nSexing,
 	    nowpos++;
    		p=p->link;
 	}
-	LinkNode* q1;
-	q1=new LinkNode(nNumber, nName, nSexing, nAge, nTestType);
-	//q->number=nNumber;
-	//q->name=nName;
-	//q->sexing=nSexing;
-	//q->age=nAge;
-	//q->testType=nTestType;
-	//q->link=NULL;
+	LinkNode* q1=new LinkNode(nNumber, nName, nSexing, nAge, nTestType);
+	q1->link=p->link;
 	p->link=q1;
 	return true;
 }
@@ -124,6 +119,7 @@ bool List::Insert(int i,string& nNumber,string& nName,string &nSexing,
 bool List::Remove(string& nNumber)
 {
 	LinkNode* p=first;
+	//寻找要删除的节点的位置
 	while(p->link!=NULL)
 	{
 		if(p->link->number==nNumber)
@@ -134,9 +130,10 @@ bool List::Remove(string& nNumber)
 	}
 	if(p->link==NULL)
 	{
-		cout<<"Sorry,we can't find the number."<<endl;
+		cout<<"您要删除的学号不存在！"<<endl;
 		return false;
 	}
+//进行删除操作
 	length--;
 	LinkNode* q=p->link;
 	cout << "你删除的考生信息是：";
@@ -164,7 +161,7 @@ bool List::Change(string& nNumber, string& nName, string &nSexing,
 	}
 	if (p->link == NULL)
 	{
-		cout << "Sorry,we can't find the number." << endl;
+		cout << "这个位置不合法，请重新输入！" << endl;
 		return false;
 	}
 	LinkNode* q = p->link;

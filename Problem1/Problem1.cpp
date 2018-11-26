@@ -10,6 +10,12 @@ int main()
 	int n;
 	cout<<"请输入考生人数:";
 	cin>>n;
+	if(n<0)
+	{
+		cout<<"请输入一个自然数！"<<endl; 
+		cout<<"请输入考生人数:";
+		cin>>n;
+	}
 	cout<<"请依次输入考生的考号，姓名，性别，年龄及报考类型："<<endl;
 	string number;
 	string name;
@@ -43,7 +49,10 @@ int main()
 			cout << "请输入要插入考生的考号，姓名，性别，年龄及报考类型：" << endl;
 			cin >> number >> name >> sexing >> age >> testType;
 			flag = DataBase.Insert(ipos, number, name, sexing, age, testType);
-			n++;
+			if(flag)
+			{
+				n++;
+			}
 			cout << endl;
 			DataBase.showTitle();
 			for (int i = 1; i <= n; i++)
@@ -57,8 +66,10 @@ int main()
 			cout << "请输入你要删除的考生考号：";
 			string dNumber;
 			cin >> dNumber;
-			DataBase.Remove(dNumber);
-			n--;
+			if(DataBase.Remove(dNumber))
+			{
+				n--;
+			}
 			cout << endl;
 			DataBase.showTitle();
 			for (int i = 1; i <= n; i++)
@@ -90,7 +101,7 @@ int main()
 			}
 			continue;
 		}
-		else
+		else if (order == 5)
 		{
 			cout << endl;
 			DataBase.showTitle();
@@ -98,6 +109,15 @@ int main()
 			{
 				DataBase.Display(i);
 			}
+			continue;
+		}
+		else if (order == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			cout<<"抱歉您想进行的操作不存在，请重新输入"<<endl; 
 			continue;
 		}
 	}
