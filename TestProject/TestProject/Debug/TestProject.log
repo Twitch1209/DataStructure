@@ -1,4 +1,2 @@
-﻿  Problem6.cpp
-e:\aaaaaaaaaaaaaaaa\transmission\problem6\tree.h(171): warning C4715: “Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::GetFinalSibling”: 不是所有的控件路径都返回值
-e:\aaaaaaaaaaaaaaaa\transmission\problem6\tree.h(180): warning C4715: “Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::GetChild”: 不是所有的控件路径都返回值
+﻿  Problem2.cpp
   TestProject.vcxproj -> E:\aaaaaaaaaaaaaaaa\Transmission\TestProject\Debug\TestProject.exe

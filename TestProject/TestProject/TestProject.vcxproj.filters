@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Problem6\Problem6.cpp">
+    <ClCompile Include="C:\Users\a\Desktop\Problem2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Problem6\Tree.h">
+    <ClInclude Include="C:\Users\a\Desktop\MyList.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
