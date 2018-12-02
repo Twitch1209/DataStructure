@@ -30,7 +30,7 @@ int SeekPath(int x,int y,SeqStack<offsets> &s)
 		h=y+Move[i].b;
 		if(Maze[g][h]==0 &&mark[g][h]==0) //下一位置可以 
 		{
-			mark[g][h]=1;
+			mark[g][h]=1;//标记这个位置走过
 			if(SeekPath(g,h,s))
 			{
 				offsets newoff={g,h};
