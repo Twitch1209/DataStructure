@@ -15,13 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\a\Desktop\NewSeekPath.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="C:\Users\a\Desktop\MyStack.h">
+    <ClInclude Include="..\..\..\Local\Problem8\Graphlnk.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Local\Problem8\Heap.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Local\Problem8\prim.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

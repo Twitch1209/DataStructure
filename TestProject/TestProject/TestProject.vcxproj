@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\a\Desktop\NewSeekPath.cpp" />
+    <ClInclude Include="..\..\..\Local\Problem8\Graphlnk.h" />
+    <ClInclude Include="..\..\..\Local\Problem8\Heap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\a\Desktop\MyStack.h" />
+    <ClCompile Include="..\..\..\Local\Problem8\prim.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
