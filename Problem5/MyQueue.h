@@ -8,20 +8,6 @@ using namespace std;
 const int maxSize=50;
 
 template<class T>
-class Queue
-{
-public:
-	Queue();
-	~Queue();
-	virtual bool EnQueue(const T& x);
-	virtual bool DeQueue(T& x)=0;
-	virtual bool getFront(T& x)=0;
-	virtual bool IsEmpty()const=0;
-	virtual bool IsFull()const =0;
-	virtual int getSize()const=0;	
-};
-
-template<class T>
 class LinkedQueue
 {
 public:
@@ -106,19 +92,6 @@ int LinkedQueue<T>::getSize()const
 	return k;
 }
 
-/*//reload the <<
-template<class T>
-ostream& operator<<(ostream& os,LinkedQueue<T>& Q)
-{
-	LinkNode<T> *p=Q.front;
-	int i=0;
-	while(p!=NULL)
-	{
-		os<<++i<<":"<<p->data<<endl;
-		p=p->link;
-	}
-	return os;
-}*/
 template<class T>
 void LinkedQueue<T>::show()
 {

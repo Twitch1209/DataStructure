@@ -15,26 +15,34 @@ int main()
 	for(int i=0;i<N;i++)
 	{
 		cin>>cus;
+		//顾客的编号为偶数
 		if(cus%2==0)
 		{
 			flag=q2->EnQueue(cus);
 		}
+		//顾客的编号为奇数
 		else
 		{
 			q1->EnQueue(cus);
 		}
 	}
+	//q1为空
 	if(q1->getSize()==0)
 	{
 		q2->show();
+		system("pause");
+		return 0;
 	}
+	//q2为空
 	else if(q2->getSize()==0)
 	{
 		q1->show();
+		system("pause");
+		return 0;
 	}
 	int count=1;
 	int deque=0;
-	int Maxcus = max(q1->getSize(), q2->getSize() * 2);
+	int Maxcus = max(q1->getSize(), q2->getSize() * 2);//最多办理业务时间
 	while(count<=Maxcus)
 	{
 		if (q1->DeQueue(deque))
