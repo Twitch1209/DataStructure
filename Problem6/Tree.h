@@ -14,41 +14,25 @@ template<class T>
 class Tree {
 public:
 	Tree() { root = current = NULL; }
-	bool Root();									//让树的根节点成为树的当前节点
 	bool IsEmpty() { return root == NULL; }			
-	bool FirstChild();
-	bool NextSibling();
+	bool FirstChild();								//在树中找到当前节点的长子，并使之成为当前节点
+	bool NextSibling();								//在树中找到当前节点的下一个兄弟，并使之成为当前节点
 	bool Parent();									//在树中找当前节点的父节点，使之成为当前节点
-	bool Find(T target);
-	void AddChild(T parName, T childName);
-	void AddSibling(T childName, T Sibling);
-	void BuildRoot(T rootVal);
-	void showAllChild(T parName);
-	bool RemoveFromPar(T parName);
-	T GetFinalSibling(T parName);
-	T GetChild(T parName);
-	void ChangeName(T nowName, T chName);
+	bool Find(T target);							//在树中搜索含有target的结点，使之成为当前结点
+	void AddChild(T parName, T childName);			//添加左子女结点
+	void AddSibling(T childName, T Sibling);		//添加右兄弟结点
+	void BuildRoot(T rootVal);						//建立树的根结点,并使之成为树的当前结点
+	void showAllChild(T parName);					//展示t结点的所有孩子
+	bool RemoveFromPar(T parName);					//删除t结点
+	T GetFinalSibling(T parName);					//得到当前结点的最后一个兄弟
+	void ChangeName(T nowName, T chName);			//将nowName修改成chName
 private:
-	TreeNode<T> *root, *current;
-	bool Find(TreeNode<T>*p, T value);
-	void RemovesubTree(TreeNode<T> *p);
-	bool FindParent(TreeNode<T>*t, TreeNode < T >*p);
+	TreeNode<T> *root, *current;//指针指向根结点和当前结点
+	bool Find(TreeNode<T>*p, T value);//在以p为根的树中搜索value
+	void RemovesubTree(TreeNode<T> *p);//删除以p为根的子树
+	bool FindParent(TreeNode<T>*t, TreeNode < T >*p);//在以t为根节点的树中搜索p的父节点
 };
 
-template<class T>
-bool Tree<T>::Root()
-{
-	if (root == NULL)
-	{
-		current = NULL;
-		return false;
-	}
-	else
-	{
-		current = root;
-		return true;
-	}
-}
 
 template<class T>
 void Tree<T>::showAllChild(T parName)
@@ -71,13 +55,15 @@ void Tree<T>::showAllChild(T parName)
 
 template <class T> 
 void Tree <T> ::BuildRoot(T rootVal) 
-{ //建立树的根结点,并使之成为树的当前结点 
+{ 
+	//建立树的根结点,并使之成为树的当前结点 
 	root= current= new TreeNode<T> (rootVal);
 }
 
 template<class T>
 void Tree<T>::AddChild(T parName, T childName)
 {
+	//将当前结点设为parName，将它的子节点设为childName
 	if (Find(parName))
 	{
 		TreeNode<T> *p = new TreeNode<T>(childName);
@@ -88,6 +74,7 @@ void Tree<T>::AddChild(T parName, T childName)
 template<class T>
 void Tree<T>::AddSibling(T childName, T Sibling)
 {
+	//将当前结点设为childName，将它的右兄弟设为Sibling
 	if (Find(childName))
 	{
 		TreeNode<T> *s = new TreeNode<T>(Sibling);
@@ -168,20 +155,14 @@ T Tree<T>::GetFinalSibling(T parName)
 		}
 		return current->data;
 	}
+	return NULL;
 }
 
-template<class T>
-T Tree<T>::GetChild(T parName)
-{
-	if (Find(parName))
-	{
-		return current->firstChild->data;
-	}
-}
 
 template<class T>
 bool Tree<T>::RemoveFromPar(T parName)
 {
+	//找到当前结点并且删除
 	if (Find(parName))
 	{
 		current->firstChild = NULL;
@@ -190,6 +171,7 @@ bool Tree<T>::RemoveFromPar(T parName)
 	}
 	return false;
 }
+
 template<class T>
 bool Tree<T>::Find(T value)
 {
@@ -227,6 +209,7 @@ void Tree<T>::RemovesubTree(TreeNode<T> *p)
 template<class T>
 void Tree<T>::ChangeName(T nowName, T chName)
 {
+	//如果找到了nowName就更改其名字
 	if (Find(nowName))
 	{
 		current->data = chName;
