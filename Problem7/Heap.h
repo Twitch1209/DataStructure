@@ -6,23 +6,23 @@ template<class E>
 class MinHeap
 {
 public:	
-	MinHeap(int sz=DefaultSize);
-	MinHeap(E arr[],int n);
-	~MinHeap(){delete []heap;}
-	bool Insert(const E& x);
-	bool RemoveMin(E& x);
-	bool IsEmpty()const
+	MinHeap(int sz=DefaultSize);//构造函数
+	MinHeap(E arr[],int n);//通过一个数组建立堆
+	~MinHeap(){delete []heap;}//析构函数
+	bool Insert(const E& x);//将x插入到最小堆中
+	bool RemoveMin(E& x);//删除堆顶的最小元素
+	bool IsEmpty()const//判断是否是空
 	{return (currentSize==0)?true:false;}
-	bool IsFull()const
+	bool IsFull()const//判断是否是满
 	{return (currentSize==maxHeapSize)?true:false;}
-	void MakeEmpty(){currentSize=0;}
-	void Show();
+	void MakeEmpty(){currentSize=0;}//置空堆
+	void Show();//输出最小堆中所有值
 private:
-	E *heap;
-	int currentSize;
-	int maxHeapSize;
-	void siftDown(int start,int m);
-	void siftUp(int start);	
+	E *heap;//存放最小堆中元素的数组
+	int currentSize;//最小堆中当前元素的个数
+	int maxHeapSize;//最小堆中最多允许元素的个数
+	void siftDown(int start,int m);//从start到m下滑调整为最小堆
+	void siftUp(int start);	//从start到0调整成为最小堆
 }; 
 
 template<class E>
@@ -140,11 +140,5 @@ void MinHeap<E>::Show()
 		cout<<heap[i]<<' ';
 	}
 }
-
-
-
-
-
-
 
 
