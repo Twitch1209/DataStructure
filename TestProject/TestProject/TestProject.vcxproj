@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Problem7\Heap.h" />
-    <ClInclude Include="..\..\Problem7\HuffmanTree.h" />
+    <ClCompile Include="..\..\Problem9\Problem9.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Problem7\Problem7.cpp" />
+    <ClInclude Include="..\..\Problem9\Graphlnk.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
