@@ -17,7 +17,6 @@ struct Edge
 	{
 		return (dest!=R.dest)?true:false;
 	}
-	
 };
 
 template<class T,class E>
@@ -218,6 +217,7 @@ bool Graphlnk<T, E>::insertEdge(int v1, int v2, E weight)
 		numEdges++;
 		return true;
 	}
+	return false;
 }
 
 //remove edge(v1,v2)

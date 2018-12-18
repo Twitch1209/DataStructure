@@ -1,8 +1,2 @@
-﻿  Problem9.cpp
-e:\aaaaaaaaaaaaaaaa\transmission\problem9\problem9.cpp(11): warning C4101: “cost”: 未引用的局部变量
-e:\aaaaaaaaaaaaaaaa\transmission\problem9\problem9.cpp(11): warning C4101: “v2”: 未引用的局部变量
-e:\aaaaaaaaaaaaaaaa\transmission\problem9\problem9.cpp(11): warning C4101: “v1”: 未引用的局部变量
-e:\aaaaaaaaaaaaaaaa\transmission\problem9\graphlnk.h(261): warning C4101: “j”: 未引用的局部变量
-  e:\aaaaaaaaaaaaaaaa\transmission\problem9\problem9.cpp(22): note: 参见对正在编译的函数 模板 实例化“void TopologicalSort<int,int>(Graphlnk<int,int> &,int)”的引用
-e:\aaaaaaaaaaaaaaaa\transmission\problem9\graphlnk.h(221): warning C4715: “Graphlnk<int,int>::insertEdge”: 不是所有的控件路径都返回值
+﻿  Problem8.cpp
   TestProject.vcxproj -> E:\aaaaaaaaaaaaaaaa\Transmission\TestProject\Debug\TestProject.exe

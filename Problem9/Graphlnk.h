@@ -1,7 +1,12 @@
 #ifndef __GRAPHLNK_H__
 #define __GRAPHLNK_H__
+
+//有向图的类定义和AOE算法
+//writen by Twitch
+ 
 #include<iostream>
 using namespace std;
+ 
 const int DefaultVertices=50;//max vertives
 
 //E--->edge,T--->vertex
@@ -23,7 +28,7 @@ struct Edge
 template<class T,class E>
 struct Vertex
 {
-	T data;						//teh name of the Vertex
+	T data;						//the name of the Vertex
 	Edge<T,E> *adj;				//*first to the list
 };
 
@@ -34,8 +39,16 @@ class Graphlnk
 public:
 	Graphlnk(int sz=DefaultVertices);
 	~Graphlnk();
-	T getValue(int i)							//get the value of Vertices(i)
-	{return(i>=0 && i<numVertices)?NodeTable[i].data:0;}
+	T getValue(int i){return (i>=0 && i<numVertices)?NodeTable[i].data:0;}							//get the value of Vertices(i)
+	void changeValue(int i,int j)
+	{
+		if(i>=0 && i<numVertices)
+		{
+			T p=NodeTable[i].data;
+			NodeTable[i].data=NodeTable[j].data;
+			NodeTable[j].data=p;
+		}
+	}
 	E getWeight(int v1,int v2);					//get the value of edge(v1,v2)
 	bool insertVertex(const T& v);				//insert vertex v
 	bool removeVertex(int v);					//delete vertex 
@@ -149,45 +162,18 @@ bool Graphlnk<T,E>::removeVertex(int v)
 {
 	//表空或者顶点号超出范围 
 	if(numVertices==1 || v<0 || v>numVertices) return false;
-	Edge<T,E> *p,*s,*t;
+	Edge<T,E> *p,*s;
 	int i,k;
 	while(NodeTable[v].adj!=NULL)//delete all vertices
 	{
 		p=NodeTable[v].adj;
-		k=p->dest;				//get neighbor k
-		s=NodeTable[k].adj;    	//找到对称存放的边节点 
-		t=NULL;
-		while(s!=NULL && s->dest!=v)
-		{
-			t=s;s=s->link;
-		}
-		if(s!=NULL)				//删除对称存放的边结点 
-		{
-			if(t==NULL) NodeTable[k].adj=s->link;
-			else t->link=s->link;
-			delete s;
-		}
 		NodeTable[v].adj=p->link;
 		delete p;
 		numEdges--;
 	}
 	numVertices--;
 	NodeTable[v].data=NodeTable[numVertices].data;
-	p=NodeTable[v].adj=NodeTable[numVertices].adj;
-	while(p!=NULL)
-	{
-		s=NodeTable[p->dest].adj;
-		while(s!=NULL)
-		{
-			if(s->dest==numVertices)
-			{
-				s->dest=v;
-				break;
-			}
-			else s=s->link;
-		}
-		p=p->link;
-	}
+	NodeTable[v].adj=NodeTable[numVertices].adj;
 	return true;
 }
 
@@ -198,7 +184,7 @@ bool Graphlnk<T, E>::insertEdge(int v1, int v2, E weight)
 {
 	if (v1 >= 0 && v1 < numVertices && v2 >= 0 && v2 < numVertices)
 	{
-		Edge<T, E> *q, *p = NodeTable[v1].adj;
+		Edge<T, E> *p = NodeTable[v1].adj;
 		while (p != NULL && p->dest !=v2)
 		{
 			p = p->link;
@@ -206,18 +192,14 @@ bool Graphlnk<T, E>::insertEdge(int v1, int v2, E weight)
 		if (p != NULL){return false;}					// if find this edge, return false
 		//if do not find ,then create new node
 		p = new Edge<T, E>;
-		q = new Edge<T, E>;
 		p->dest = v2;
 		p->cost = weight;
 		p->link = NodeTable[v1].adj;					//link to v1's list
 		NodeTable[v1].adj = p;
-		q->dest = v1;
-		q->cost = weight;
-		q->link = NodeTable[v2].adj;
-		NodeTable[v2].adj = q;
 		numEdges++;
 		return true;
 	}
+	return false;
 }
 
 //remove edge(v1,v2)
@@ -241,14 +223,6 @@ bool Graphlnk<T, E>::removeEdge(int v1, int v2)
 			delete p;
 		}
 		else return false;											//没有找到被删边结点
-		//v2对应边链表中删除
-		p = NodeTable[v2].adj;
-		q = NULL;
-		s = p;
-		while (p->dest != v1) { q = p; p = p->link; }
-		if (p == s) NodeTable[v2].adj = p->link;				//该结点是边链表的首结点
-		else q->link = p->link;									//不是，重新链接
-		delete p;
 		return true;
 	}
 	return false;
@@ -256,20 +230,26 @@ bool Graphlnk<T, E>::removeEdge(int v1, int v2)
 
 
 template<class T,class E>
-void TopologicalSort(Graphlnk<T, E>& G,int M)
+bool TopologicalSort(Graphlnk<T, E>& G,int M)
 {
 	int i, j, w, v;
 	int top = -1;						//入度为零顶点的栈初始化
 	int n = G.getNumVertices();			//网络中顶点个数
 	int *count = new int[n];			//入度数组兼入度为零顶点栈
+	int *topsort = new int[n];
+	int sum=0;							//记录拓扑排序后得到的数组 
+	
 	for (i = 0; i < n; i++)
 	{
 		count[i] = 0;
 	}
 	int v1, v2, cost;
-	for (int i = 0; i<M; i++)
+	for (i = 0; i<M; i++)
 	{
 		cin >> v1 >> v2 >> cost;
+		v1--;
+		v2--;
+		count[v2]++;
 		G.insertEdge(v1, v2, cost);
 	}
 	for (i = 0; i < n; i++)			//检查网络中所有的顶点
@@ -284,14 +264,16 @@ void TopologicalSort(Graphlnk<T, E>& G,int M)
 	{
 		if (top == -1)				//中途栈空，转出
 		{
-			cout << "网络中有回路！" << endl;
-			return;
+			cout<<0;
+			return false;
 		}
 		else						//继续拓扑排序
 		{
 			v = top;
 			top = count[top];		//v退栈
-			cout << G.getValue(v) << ' ' << endl;//输出
+			//将得到的拓扑排序结果存入topsort数组 
+			topsort[sum]=G.getValue(v);
+			sum++;
 			w = G.getFirstNeighbor(v);
 			while (w != -1)				//扫描出边表
 			{
@@ -302,9 +284,10 @@ void TopologicalSort(Graphlnk<T, E>& G,int M)
 				}
 				w = G.getNextNeighbor(v, w);
 			}
-
 		}
 	}
+	if(sum!=n) return false;
+	return true;
 }
 
 template<class T,class E>
@@ -330,10 +313,11 @@ void CriticalPath(Graphlnk<T, E>& G)
 			j = G.getNextNeighbor(i, j);
 		}
 	}
-	Vl[n - 1] = Ve[n - 1];
-	for (j = n - 2; j > 0; j--)					//逆向计算Vl[]
+	Vl[n-1] = Ve[n-1];
+	for (j = n - 2; j >= 0; j--)					//逆向计算Vl[]
 	{
 		k = G.getFirstNeighbor(j);
+		Vl[j]=Vl[k]-G.getWeight(j, k);
 		while (k != -1)
 		{
 			w = G.getWeight(j, k);
@@ -341,28 +325,40 @@ void CriticalPath(Graphlnk<T, E>& G)
 			k = G.getNextNeighbor(j, k);
 		}
 	}
-	for (int i = 0; i < n; i++)
+	int start=0;
+	int end=0;
+	for (i = 0; i < n; i++)
 	{
-		cout << endl;
-		cout << Ve[i] << Vl[i] << endl;
-
+		j = G.getFirstNeighbor(i);
+		if(end==i) start=i;
+		while (j != -1)
+		{
+			Ae = Ve[i];
+			Al = Vl[j] - G.getWeight(i, j);
+			if (Al == Ae)
+			{
+				//cout << G.getValue(i)+1 << "->" << G.getValue(j)+1 << endl;
+				end=j;
+			}
+			j = G.getNextNeighbor(i,j);
+		}
+		if(start==i) sum += G.getWeight(start, end);
 	}
+	cout<<sum<<endl;
 	for (i = 0; i < n; i++)
 	{
 		j = G.getFirstNeighbor(i);
 		while (j != -1)
 		{
 			Ae = Ve[i];
-			Al = Vl[k] - G.getWeight(i, j);
+			Al = Vl[j] - G.getWeight(i, j);
 			if (Al == Ae)
 			{
-				cout << G.getValue(i) << "->" << G.getValue(j) << endl;
-				sum += G.getWeight(i, j);
+				cout << G.getValue(i)+1 << "->" << G.getValue(j)+1 << endl;
 			}
 			j = G.getNextNeighbor(i,j);
 		}
 	}
-	cout << sum;
 	delete[]Ve;
 	delete[]Vl;
 
