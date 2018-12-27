@@ -284,21 +284,19 @@ void merge(int L1[],int L2[],int left,int mid,int right,long int& sortSum,long i
 			L1[t++]=L2[s2++];
 			sortSum++;
 		}
-		compareSum+=3;
+		compareSum+=2;
 	}
 	//第一个表没有检测完 
 	while(s1<=mid)
 	{
 		L1[t++]=L2[s1++];
 		sortSum++;
-		compareSum++;
 	}
 	//第二个表没有检测完 
 	while(s2<=right)
 	{
 		L1[t++]=L2[s2++];
 		sortSum++;
-		compareSum++;
 	}
 }
 
@@ -342,38 +340,57 @@ int getMaxDigit(int a[],int n)
 	return digit;	
 } 
 
-void LSDSort(int a[],int n)
+void LSDSort(int a[],int n,long int& sortSum,long int& compareSum)
 {
 	int maxDigit=getMaxDigit(a,n);
-	int base=1;
-	int *bucket=new int[n];
-	while((maxDigit--)>0)
+	int count[10];
+	int *tmp=new int[n];
+	int radix = 1;
+	int i, j, k;
+	for (i = 1; i <= maxDigit; i++)//进行maxdiDigit次排序
 	{
-		int counts[10]={0};
-		int start[10]={0};
-		start[0]=0;
-		
-		//第num位的元素 
-		for(int i=0;i<n;i++)
+		//每次分配前清空计数器
+		for (j = 0; j < 10; j++)
 		{
-			int num=(a[i]/base)%10;
-			counts[num]++;
+			count[j] = 0;
 		}
-		
-		for(int i=1;i<10;i++)
+		for (j = 0; j < n; j++)
 		{
-			start[i]=start[i-1]+counts[i-1];
+			k = (a[j] / radix) % 10;//统计每个桶中的记录数
+			count[k]++;
 		}
-		
-		for(int i=0;i<n;i++)
+		for (j = 1; j < 10; j++)
 		{
-			int num=(a[i]/base)%10;
-			bucket[start[num]++]=a[i];
+			count[j] = count[j - 1] + count[j]; //将tmp中的位置依次分配给每个桶
 		}
-		memcpy(a,bucket,sizeof(int)*n);
-		base*=10;
+		//将所有桶中记录依次收集到tmp中
+		for (j = n - 1; j >= 0; j--)
+		{
+			k = (a[j] / radix) % 10;
+			tmp[count[k] - 1] = a[j];
+			count[k]--;
+		}
+		//将临时数组的内容复制到data中
+		for (j = 0; j < n; j++)
+		{
+			a[j] = tmp[j];
+		}
+		radix = radix * 10;
 	}
-	
+	delete[] tmp;
+}
+
+void RadixSort(int a[], int n)
+{
+	double start, finish;
+	start = (double)clock();			//计算开始时间
+	long int sortSum = 0;				//交换次数 
+	long int compareSum = 0;			//比较次数 	
+	LSDSort(a, n, sortSum, compareSum);
+	finish = (double)clock();
+	cout << left << setw(24) << "基数排序所用时间：" << finish - start << endl;
+	cout << left << setw(24) << "基数排序交换次数：" << sortSum << endl;
+	cout << left << setw(24) << "基数排序比较次数：" << compareSum << endl;
 }
 
 int main()
@@ -415,7 +432,7 @@ int main()
 			case 5:{QuickSort(a,n);continue;}
 			case 6:{HeapSort(a,n);continue;}
 			case 7:{MergeSort(a,n);continue;}
-			case 8:{LSDSort(a,n);continue;}
+			case 8:{RadixSort(a,n);continue;}
 		}
 		 
 		
