@@ -22,8 +22,8 @@ void BubbleSort(int a[],int n)
 	start=(double)clock();			//计算开始时间 
 	bool exchange=false;			//判断有没有交换 
 	int i,j;
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 
 	for(i=0;i<n-1;i++)
 	{
 		exchange=false;
@@ -53,8 +53,8 @@ void SelectSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间 
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 
 	int k=0;
 	//寻找最大的 
 	for(int i=0;i<n-1;i++)
@@ -89,8 +89,8 @@ void InsertSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 
 	int temp,j;
 	for(int i=1;i<n;i++)
 	{
@@ -124,8 +124,8 @@ void ShellSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 
 	int j;
 	int gap=n;
 	int temp;
@@ -156,7 +156,7 @@ void ShellSort(int a[],int n)
 } 
 
 //快速排序
-int PartSort(int a[],int l,int r,long int& sortSum,long int &compareSum)
+int PartSort(int a[],int l,int r,long long int& sortSum,long long int &compareSum)
 {
 	//基准元素 
 	int pivotpos=l;
@@ -186,7 +186,7 @@ int PartSort(int a[],int l,int r,long int& sortSum,long int &compareSum)
 	return pivotpos;
 }
 
-void myQuickSort(int a[],int left,int right,long int& sortSum,long int& compareSum)
+void myQuickSort(int a[],int left,int right,long long int& sortSum,long long int& compareSum)
 {
 	if(left<right)
 	{
@@ -201,8 +201,8 @@ void QuickSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 
 	myQuickSort(a,0,n-1,sortSum,compareSum);
 	finish=(double)clock();	
 	cout<< left <<setw(24)<<"快速排序所用时间："<<finish-start<<endl;
@@ -216,7 +216,7 @@ void Swap(int& i,int& j)
 	int temp=i;i=j;j=temp;
 }
 
-void siftDown(int a[],int start,int m,long int& sortSum,long int& compareSum)//从节点start到m从上到下比较，如果子女的值小于
+void siftDown(int a[],int start,int m,long long int& sortSum,long long int& compareSum)//从节点start到m从上到下比较，如果子女的值小于
 {										//父节点的值则调整 
 	int i=start;
 	int j=2*i+1;
@@ -242,8 +242,8 @@ void HeapSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 		
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 		
 	for(int i=(n-2)/2;i>=0;i--)
 	{
 		siftDown(a,i,n-1,sortSum,compareSum);
@@ -261,7 +261,7 @@ void HeapSort(int a[],int n)
 }
 
 //归并排序
-void merge(int L1[],int L2[],int left,int mid,int right,long int& sortSum,long int& compareSum)
+void merge(int L1[],int L2[],int left,int mid,int right,long long int& sortSum,long long int& compareSum)
 {
 //把待归并元素序列L1复制到辅助数组L2中，再从L2归并到L1中 
 	for(int k=left;k<=right;k++)
@@ -300,7 +300,7 @@ void merge(int L1[],int L2[],int left,int mid,int right,long int& sortSum,long i
 	}
 }
 
-void mergeSort(int a[],int b[],int left,int right,long int& sortSum,long int& compareSum)
+void mergeSort(int a[],int b[],int left,int right,long long int& sortSum,long long int& compareSum)
 {
 	if(left>=right){return;}
 	int mid=(left+right)/2;			//花费为两个子序列 
@@ -313,8 +313,8 @@ void MergeSort(int a[],int n)
 {
 	double start,finish;
 	start=(double)clock();			//计算开始时间
-	long int sortSum=0;				//交换次数 
-	long int compareSum=0;			//比较次数 	
+	long long int sortSum=0;				//交换次数 
+	long long int compareSum=0;			//比较次数 	
 	int *b=new int[n];
 	mergeSort(a,b,0,n-1,sortSum,compareSum);
 	delete b;
@@ -340,7 +340,7 @@ int getMaxDigit(int a[],int n)
 	return digit;	
 } 
 
-void LSDSort(int a[],int n,long int& sortSum,long int& compareSum)
+void LSDSort(int a[],int n,long long int& sortSum,long long int& compareSum)
 {
 	int maxDigit=getMaxDigit(a,n);
 	int count[10];
@@ -384,8 +384,8 @@ void RadixSort(int a[], int n)
 {
 	double start, finish;
 	start = (double)clock();			//计算开始时间
-	long int sortSum = 0;				//交换次数 
-	long int compareSum = 0;			//比较次数 	
+	long long int sortSum = 0;				//交换次数 
+	long long int compareSum = 0;			//比较次数 	
 	LSDSort(a, n, sortSum, compareSum);
 	finish = (double)clock();
 	cout << left << setw(24) << "基数排序所用时间：" << finish - start << endl;
@@ -407,17 +407,20 @@ int main()
 	cout << "**" << setw(32) << "8 --- 基数排序    " << setw(16) << "**" << endl;
 	cout << "**" << setw(32) << "9 --- 退出程序    " << setw(16) << "**" << endl;
 	cout << "==================================================" << endl;
-	srand(int(time(0)));
-	int n;
-	cout<<"请输入要产生的随机数的个数:";
-	cin>>n;
-	int *a=new int[n];
-	for(int i=0;i<n;i++)
-	{
-		a[i]=rand();
-	}
+
 	while(1)
 	{
+		cout << endl;
+		srand(int(time(0)));
+		int n;
+		cout << "请输入要产生的随机数的个数:";
+		cin >> n;
+		int *a = new int[n];
+		for (int i = 0; i<n; i++)
+		{
+			a[i] = rand();
+		}
+
 		cout<<endl;
 		for(int i=0;i<n;i++) {a[i]=rand();}
 		int order;
@@ -425,17 +428,16 @@ int main()
 		cin>>order;
 		switch(order)
 		{
-			case 1:{BubbleSort(a,n); continue;}
-			case 2:{SelectSort(a,n); continue;}
-			case 3:{InsertSort(a,n); continue;}
-			case 4:{ShellSort(a,n);continue;}
-			case 5:{QuickSort(a,n);continue;}
-			case 6:{HeapSort(a,n);continue;}
-			case 7:{MergeSort(a,n);continue;}
-			case 8:{RadixSort(a,n);continue;}
+			case 1:{BubbleSort(a,n); break;}
+			case 2:{SelectSort(a,n); break;}
+			case 3:{InsertSort(a,n); break;}
+			case 4:{ShellSort(a,n); break;}
+			case 5:{QuickSort(a,n); break;}
+			case 6:{HeapSort(a,n); break;}
+			case 7:{MergeSort(a,n); break;}
+			case 8:{RadixSort(a,n); break;}
+			case 9: {return 0; }
 		}
-		 
-		
 	}
-	cout<<endl;
+	return 0;
 }

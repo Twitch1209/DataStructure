@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Local\Problem10\Problem10.cpp" />
+    <ClCompile Include="..\..\Problem10\Problem10.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Local\Problem10\MyStack.h" />
+    <ClInclude Include="..\..\Problem10\MyStack.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

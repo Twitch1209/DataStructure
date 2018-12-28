@@ -16,13 +16,8 @@ struct Edge
 	int dest;		//the other vertex
 	E cost;			//value
 	Edge<T,E>* link;  //next point
-	Edge():dest(0),cost(0),link(NULL){}
-	Edge(int num,E weight):dest(num),cost(weight),link(NULL){}
-	bool operator!=(Edge<T,E>&R)const
-	{
-		return (dest!=R.dest)?true:false;
-	}
-	
+	Edge():dest(0),cost(0),link(NULL){}//构造函数
+	Edge(int num,E weight):dest(num),cost(weight),link(NULL){}//具有默认参数的构造函数
 };
 
 template<class T,class E>
@@ -74,6 +69,7 @@ private:
 	int numVertices;							//the number of vertices	
 };
 
+// Graphlnk的构造函数，构造一个邻接表
 template<class T,class E>
 Graphlnk<T,E>::Graphlnk(int sz)
 {
@@ -88,6 +84,7 @@ Graphlnk<T,E>::Graphlnk(int sz)
 	}
 }
 
+// Graphlnk的析构函数，实现对内存的回收
 template<class T,class E>
 Graphlnk<T,E>::~Graphlnk()
 {
@@ -104,6 +101,7 @@ Graphlnk<T,E>::~Graphlnk()
 	delete []NodeTable;
 }
 
+//得到v的第一个邻居
 template<class T,class E>
 int Graphlnk<T,E>::getFirstNeighbor(int v)
 {
@@ -115,6 +113,7 @@ int Graphlnk<T,E>::getFirstNeighbor(int v)
 	return -1;
 }
 
+//得到v的邻居中w后面一个
 template<class T,class E>
 int Graphlnk<T,E>::getNextNeighbor(int v,int w)
 {
@@ -133,6 +132,7 @@ int Graphlnk<T,E>::getNextNeighbor(int v,int w)
 	return -1;
 }
 
+//得到边（v1，v2）的权值
 template<class T,class E>
 E Graphlnk<T,E>::getWeight(int v1,int v2)
 {
@@ -148,15 +148,17 @@ E Graphlnk<T,E>::getWeight(int v1,int v2)
 	return 0;
 }
 
+//在有向图中插入结点v
 template<class T,class E>
 bool Graphlnk<T,E>::insertVertex(const T& v)
 {
-	if(numVertices==maxVertices) return false;
+	if(numVertices==maxVertices) return false;//如果有向图已经满了则返回错误
 	NodeTable[numVertices].data=v;
-	numVertices++;
+	numVertices++;//加入到邻接表中
 	return true;
 }
 
+//从有向图中删除结点v
 template<class T,class E>
 bool Graphlnk<T,E>::removeVertex(int v)
 {
@@ -178,7 +180,7 @@ bool Graphlnk<T,E>::removeVertex(int v)
 }
 
 
- //insert (v1,v2)
+ //插入边(v1,v2)
 template<class T,class E>
 bool Graphlnk<T, E>::insertEdge(int v1, int v2, E weight)
 {
@@ -202,7 +204,7 @@ bool Graphlnk<T, E>::insertEdge(int v1, int v2, E weight)
 	return false;
 }
 
-//remove edge(v1,v2)
+//删除边(v1,v2)
 template<class T,class E>
 bool Graphlnk<T, E>::removeEdge(int v1, int v2)
 {
@@ -228,11 +230,11 @@ bool Graphlnk<T, E>::removeEdge(int v1, int v2)
 	return false;
 }
 
-
+//拓扑排序
 template<class T,class E>
 bool TopologicalSort(Graphlnk<T, E>& G,int M)
 {
-	int i, j, w, v;
+	int i, w, v;
 	int top = -1;						//入度为零顶点的栈初始化
 	int n = G.getNumVertices();			//网络中顶点个数
 	int *count = new int[n];			//入度数组兼入度为零顶点栈
@@ -262,7 +264,7 @@ bool TopologicalSort(Graphlnk<T, E>& G,int M)
 	}
 	for (i = 0; i < n; i++)			//期望输出n个顶点
 	{
-		if (top == -1)				//中途栈空，转出
+		if (top == -1)				//中途栈空，转出,表示有回路
 		{
 			cout<<0;
 			return false;
@@ -290,26 +292,27 @@ bool TopologicalSort(Graphlnk<T, E>& G,int M)
 	return true;
 }
 
+//计算关键路径
 template<class T,class E>
 void CriticalPath(Graphlnk<T, E>& G)
 {
 	int i, j, k;
 	E Ae, Al, w;
-	int n = G.getNumVertices();
+	int n = G.getNumVertices();//n为结点数
 	E *Ve = new E[n];
 	E *Vl = new E[n];
 	int sum=0;
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++)//初始化Ve[]
 	{
 		Ve[i] = 0;
 	}
 	for (i = 0; i < n; i++)						//正向计算Ve[]
 	{
 		j = G.getFirstNeighbor(i);
-		while (j != -1)
+		while (j != -1)//遍历所有邻居
 		{
 			w = G.getWeight(i, j);
-			if (Ve[i] + w > Ve[j]) Ve[j] = Ve[i] + w;
+			if (Ve[i] + w > Ve[j]) Ve[j] = Ve[i] + w;//最早可能开始时间=max（前+边）
 			j = G.getNextNeighbor(i, j);
 		}
 	}
@@ -321,13 +324,13 @@ void CriticalPath(Graphlnk<T, E>& G)
 		while (k != -1)
 		{
 			w = G.getWeight(j, k);
-			if (Vl[k] - w < Vl[j]) Vl[j] = Vl[k] - w;
+			if (Vl[k] - w < Vl[j]) Vl[j] = Vl[k] - w;//Vl=min（后-边）
 			k = G.getNextNeighbor(j, k);
 		}
 	}
 	int start=0;
 	int end=0;
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++)						//求各活动的e和l
 	{
 		j = G.getFirstNeighbor(i);
 		if(end==i) start=i;
@@ -337,14 +340,13 @@ void CriticalPath(Graphlnk<T, E>& G)
 			Al = Vl[j] - G.getWeight(i, j);
 			if (Al == Ae)
 			{
-				//cout << G.getValue(i)+1 << "->" << G.getValue(j)+1 << endl;
 				end=j;
 			}
 			j = G.getNextNeighbor(i,j);
 		}
-		if(start==i) sum += G.getWeight(start, end);
+		if(start==i) sum += G.getWeight(start, end);		//如果确定了这条边为关键边则加到sum
 	}
-	cout<<sum<<endl;
+	cout<<sum<<endl;						//输出最短时间
 	for (i = 0; i < n; i++)
 	{
 		j = G.getFirstNeighbor(i);
@@ -361,7 +363,6 @@ void CriticalPath(Graphlnk<T, E>& G)
 	}
 	delete[]Ve;
 	delete[]Vl;
-
 }
 
 
