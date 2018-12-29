@@ -2,7 +2,6 @@
 #define __GRAPHLNK_H__
 
 //有向图的类定义和AOE算法
-//writen by Twitch
  
 #include<iostream>
 using namespace std;

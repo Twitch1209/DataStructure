@@ -437,6 +437,10 @@ int main()
 			case 7:{MergeSort(a,n); break;}
 			case 8:{RadixSort(a,n); break;}
 			case 9: {return 0; }
+			default:{
+				cout << "没有匹配的操作！请重新输入" << endl;
+				break;
+			}
 		}
 	}
 	return 0;
